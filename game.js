@@ -9,7 +9,13 @@ const H = 600;
 const keys = {};
 const justPressed = {};
 
-
+window.addEventListener('keydown', e => {
+  if (!keys[e.code]) justPressed[e.code] = true;
+  keys[e.code] = true;
+  if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code))
+    e.preventDefault();
+});
+window.addEventListener('keyup', e => { keys[e.code] = false; });
 
 function pressed(code) {
   const val = justPressed[code];
@@ -308,6 +314,7 @@ function update(dt) {
 
   if (state === 'dead') {
     deadTimer -= dt;
+    pressed('Space');   // descarta pulsaciones mientras la nave está muerta
     particles.forEach(p => p.update(dt));
     particles = particles.filter(p => !p.dead);
     asteroids.forEach(a => a.update(dt));
