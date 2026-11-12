@@ -47,3 +47,7 @@ Luego visita `http://localhost:3000`.
 - 3 vidas con invencibilidad temporal al reaparecer (parpadeo)
 - Asteroides se parten en fragmentos más pequeños al ser destruidos
 - Partículas de explosión al destruir asteroides
+- Power-ups que aparecen al azar al destruir un asteroide (cada tipo una vez por nivel), con contador en pantalla. Duran 20 s:
+  - Disparo triple: 3 balas en abanico
+  - Escudo: absorbe un impacto de asteroide
+  - Slow motion: los asteroides se mueven a la mitad de velocidad

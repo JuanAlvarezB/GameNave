@@ -29,7 +29,13 @@ Todo vive en un solo archivo con variables globales de módulo, en este orden: e
 
 ### Entidades
 
-- `Bullet`, `Asteroid`, `Ship` y `Particle` tienen `update(dt)` y `draw()`.
+- `Bullet`, `Asteroid`, `Ship`, `Particle` y `PowerUp` tienen `update(dt)` y `draw()`.
+- **Power-ups.** Al destruir un asteroide hay un 15 % de probabilidad de que aparezca un `PowerUp` parpadeante (8 s en pantalla). Hay 3 tipos en `POWERUP_TYPES`: `triple` (rombo cian), `shield` (hexágono verde) y `slow` (reloj amarillo). Cada tipo aparece como máximo una vez por nivel (`powerupsSpawned`, un `Set` que se reinicia en `initGame()` y `nextLevel()`). Al recogerlo, `applyPowerUp(type)` activa el efecto durante `POWERUP_DURATION` (20 s):
+  - `triple`: `ship.tripleTimer`; `Ship.tryShoot()` dispara 3 balas en abanico.
+  - `shield`: `ship.shieldTimer`; absorbe un único impacto de asteroide (y da 1.5 s de invencibilidad).
+  - `slow`: `slowTimer` (global, afecta a los asteroides); en `update()` los asteroides se actualizan con `dt * SLOW_FACTOR`. La nave, las balas y las partículas no se ralentizan.
+  - Los timers de la nave se pierden en `ship.reset()`; `slowTimer` se pone a 0 en `killShip()`, `initGame()` y `nextLevel()`.
+  - `drawHUD()` muestra un contador con barra por cada efecto activo (`drawPowerTimer`).
 - Se marcan para eliminar con `dead = true` y el bucle de update reconstruye los arreglos con `filter`.
 - `Asteroid.split()` devuelve los asteroides hijos, que se agregan después de la fase de colisiones.
 - Las tablas `RADII`, `SPEEDS` y `POINTS` se indexan por tamaño (1 = pequeño, 2 = mediano, 3 = grande). El índice 0 no se usa. Los asteroides pequeños dan más puntos.
@@ -45,7 +51,7 @@ Todo vive en un solo archivo con variables globales de módulo, en este orden: e
 
 ## Notas
 
-- El README menciona power-ups y un asteroide tipo "estrella fugaz", pero ninguno existe en `game.js`.
+- El README menciona power-ups y un asteroide tipo "estrella fugaz". Existen los power-ups de disparo triple, escudo y slow motion; faltan Bomba Nova, Hiperpropulsión y la estrella fugaz.
 
 ## Testing
  - Para crear. diseñar y ejecutar las pruebas ir al archivo @ArquitecturaTesting.md
